@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const BookSchema = new mongoose.Schema({
-  name: { type: String, required: true, minlength: 5, maxlength: 50 },
+  name: { type: String, required: true, minlength: 3, maxlength: 50 },
   number: { type: Number, required: true, min: 0, max: 10000 },
   categories: { type: [String], required: true },
   authors: [
@@ -12,19 +12,19 @@ const BookSchema = new mongoose.Schema({
 const Book = mongoose.model("Book", BookSchema);
 
 async function createBook(name, number, categories, authorsIds) {
-  let book = new Book({
+  const book = new Book({
     name,
     categories,
     authors: authorsIds,
     number
   });
-  book = await book.save();
-  console.log(book);
+  console.log(await book.save());
+  return book;
 }
 
 async function listBooks() {
   const books = await Book.find().populate("authors");
-  console.log(books[0]);
+  return books;
 }
 
 module.exports.BookSchema = BookSchema;

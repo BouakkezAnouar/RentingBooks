@@ -23,6 +23,9 @@ async function createRental(bookId, customerId) {
     console.log("book is out of stock !");
     return;
   }
+  if (!moongoose.Types.ObjectId.isValid(requestAnimationFrame.body.customerId))
+    return res.status(400).send("Invalid customer");
+
   let customer = await Customer.findById(customerId);
   if (!customer) {
     console.log("customer id not found !");
