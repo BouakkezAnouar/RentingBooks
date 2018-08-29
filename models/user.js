@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
+const _ = require("lodash");
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true, minlength: 3, maxlength: 50 },
@@ -22,7 +23,9 @@ async function createUser(name, email, password) {
     password
   });
   try {
-    return await user.save();
+    await user.save();
+    //pick name and email only
+    return _.pick(user, ["_id", "name", "email"]);
   } catch (err) {
     console.log(err.message);
   }

@@ -1,6 +1,7 @@
 const { User, validateUser, createUser } = require("../models/user");
 const mongoose = require("mongoose");
 const express = require("express");
+
 const router = express.Router();
 
 router.post("/", async (req, res) => {
