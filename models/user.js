@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 const _ = require("lodash");
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true, minlength: 3, maxlength: 50 },
@@ -22,6 +23,9 @@ async function createUser(name, email, password) {
     email,
     password
   });
+
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(user.password, salt);
   try {
     await user.save();
     //pick name and email only
