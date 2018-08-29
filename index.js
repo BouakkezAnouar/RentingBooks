@@ -7,6 +7,7 @@ const rentalRoute = require("./routes/rental");
 const authorRoute = require("./routes/author");
 const userRoute = require("./routes/user");
 const { createBook, listBooks } = require("./models/Book");
+const auth = require("./routes/auth");
 const { createAuthor } = require("./models/Author");
 const { createCustomer } = require("./models/Customer");
 const { createRental, getRental } = require("./models/Rental");
@@ -20,6 +21,7 @@ app.use("/api/book", bookRoute);
 // app.use("/api/author", authorRoute);
 // app.use("/api/rental", rentalRoute);
 app.use("/api/user", userRoute);
+app.use("/api/auth", auth);
 
 mongoose
   .connect("mongodb://localhost/playground")
