@@ -5,6 +5,7 @@ const customerRoute = require("./routes/customer");
 const { router: bookRoute } = require("./routes/book");
 const rentalRoute = require("./routes/rental");
 const authorRoute = require("./routes/author");
+const config = require("config");
 const userRoute = require("./routes/user");
 const { createBook, listBooks } = require("./models/Book");
 const auth = require("./routes/auth");
@@ -13,6 +14,11 @@ const { createCustomer } = require("./models/Customer");
 const { createRental, getRental } = require("./models/Rental");
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
+
+if (!config.get("jwtKey")) {
+  console.log("jwt not defined");
+  process.exit(1);
+}
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
